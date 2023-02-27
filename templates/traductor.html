@@ -1,0 +1,19 @@
+{% extends "layout.html"%}
+
+{%block content %}
+    <div class="col-xs-6">
+        {% from "_macros.html" import render_field %}
+        <form action="" method="post" novalidate>
+        <div class="row_control-group">
+            {{render_field(form.Ingles)}}
+            {{render_field(form.Español)}}
+            <input type="submit" value="Registrar">
+        </div>
+
+        <div class="row_control-group">
+            {{render_field(form.RadIngles)}}
+            {{render_field(form.RadEspañol)}}
+        </div>
+    </form>
+    </div>
+{%endblock %}
