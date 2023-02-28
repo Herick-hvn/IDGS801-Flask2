@@ -30,14 +30,17 @@ class LoginForm(Form):
         validators.length(min = 4, max = 10, message = 'lomg de campo 4 min and 5 max')
     ])
 
-class UseForm3(Form):
-    Ingles = StringField('Ingles',[
-        validators.DataRequired(message = 'El campo es requerido '),
-        validators.length(min = 4, max = 10, message = 'lomg de campo 4 min and 5 max')
+class IdiomasForm(Form):
+    esp = StringField("Español", [
+        validators.DataRequired(message='El campo es requerido'),
+        validators.length(min=2,max=25,message='El campo no cuenta con la informacion necesaria')
     ])
-    Español = StringField('Español',[
-        validators.DataRequired(message = 'El campo es requerido '),
-        validators.length(min = 4, max = 10, message = 'lomg de campo 4 min and 5 max')
+    eng = StringField("Ingles:      ", [
+        validators.DataRequired(message='El campo es requerido'),
+        validators.length(min=2,max=25,message='El campo no cuenta con la informacion necesaria')
     ])
-    RadIngles = RadioField('Ingles', [validators.DataRequired()])
-    RadEspañol = RadioField('Español', [validators.DataRequired()])
+    bus = StringField("Palabra", [
+        validators.DataRequired(message='El campo es requerido'),
+        validators.length(min=2,max=25,message='El campo no cuenta con la informacion necesaria')
+    ])
+    opc = SelectField('Lenguaje',choices=[('esp','Español: '),('eng','Ingles')])

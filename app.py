@@ -41,19 +41,67 @@ def alumnos():
 
 
 @app.route('/Traductor', methods=['GET', 'POST'])
-def traductor():
-    reg_tra = forms.UseForm3(request.form)
-    ing = ''
-    esp = ''
-    if request.method == 'POST' and reg_tra.validate():
-        ing = reg_tra.Ingles.data
-        esp = reg_tra.Español.data
-        file = open('palabras.txt','a')
-        file.write('\n' + ing)
-        file.write('\n' + esp)
-        file.close()
-    return render_template('Traductor.html', form = reg_tra, ing = ing, esp = esp)
+def diccionario():
+    reg_language = forms.IdiomasForm(request.form)
+    esp = ""
+    eng = ""
+    opc = ""
+    bus = ""
+    palabra = ""
+    idioma = ""
+    if request.method == 'POST':
+        esp = reg_language.esp.data
+        eng = reg_language.eng.data
+        opc = reg_language.opc.data
+        bus = reg_language.bus.data
+        if esp != None and eng != None:
+            add_dictionary(eng, esp)
+        if opc != None and bus != None:
+            palabra = search_dictionary(opc, bus)
+            if opc == "eng":
+                idioma = "English"
+            else:
+                idioma = "Español"
+    return render_template('traductorh.html',form = reg_language, palabra = palabra, idioma = idioma)
 
+
+def add_dictionary(eng, esp):
+    file = open('traduccion.txt','a')
+    file.write(eng.lower())
+    file.write("\n")
+    file.write(esp.lower())
+    file.write("\n")
+    file.close()
+
+def search_dictionary(opc, bus):
+    file = open('traduccion.txt','r')
+    resultado = file.read()
+    datos = resultado.lower().split() # convertir todo a minúsculas
+    i = 0
+    palabra = ""
+    
+    if opc == "eng":
+        for x in datos:
+            if x == bus.lower(): # comparar en minúsculas
+                palabra = datos[i-1] 
+                if i%2 == 0:
+                    palabra = "Term in English"
+            if palabra == "":
+                palabra = "Word not found"
+            i += 1
+    else:
+        for x in datos:
+            if x == bus.lower(): # comparar en minúsculas
+                palabra = datos[i+1]
+                if i%2 != 0:
+                    palabra = ""
+            if palabra == "":
+                palabra = "Palabra no encontrada"
+            i += 1
+            
+    return palabra
+
+                
 
 
 if __name__ == "__main__":
