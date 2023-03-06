@@ -65,38 +65,22 @@ def diccionario():
     return render_template('traductorh.html',form = reg_language, palabra = palabra, idioma = idioma)
 
 
+
 @app.route('/Resistencias', methods=['GET', 'POST'])
-def diccionario():
-    reg_language = forms.Resistencias(request.form)
-    esp = ""
-    eng = ""
-    opc = ""
-    bus = ""
-    palabra = ""
-    idioma = ""
-    if request.method == 'POST':
-        esp = reg_language.esp.data
-        eng = reg_language.eng.data
-        opc = reg_language.opc.data
-        bus = reg_language.bus.data
-        if esp != None and eng != None:
-            add_dictionary(eng, esp)
-        if opc != None and bus != None:
-            palabra = search_dictionary(opc, bus)
-            if opc == "eng":
-                idioma = "English"
-            else:
-                idioma = "Español"
-    return render_template('traductorh.html',form = reg_language, palabra = palabra, idioma = idioma)
-
-
-
-
-
-
-
-
-
+def calcular_resistencia():
+    form = forms.Resistencias(request.form)
+    valor = 0
+    valor_max = 0
+    valor_min = 0
+    if request.method == 'POST' and form.validate():
+        band1_valor = int(form.band1.data)
+        band2_valor = int(form.band2.data)
+        band3_valor = float(form.band3.data)
+        tolerancia_valor = float(form.tolerancia.data)
+        valor = ((band1_valor * 10) + band2_valor) * band3_valor
+        valor_min = valor * (1 - (tolerancia_valor / 100))
+        valor_max = valor * (1 + (tolerancia_valor / 100))
+    return render_template('resistencias.html', form=form, valor=valor, valor_min=valor_min, valor_max=valor_max,band1_valor=band1_valor,band2_valor=band2_valor, band3_valor=band3_valor, tolerancia_valor=tolerancia_valor)
 
 
 def add_dictionary(eng, esp):

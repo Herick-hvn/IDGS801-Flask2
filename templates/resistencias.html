@@ -1,0 +1,74 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    {% from "_macros.html" import render_field %}
+    {% from "_macros.html" import color_band1_band2 %}
+    {% from "_macros.html" import color_band3 %}
+    {% from "_macros.html" import color_tolerancia %}
+
+
+    <div class="container">
+        <br>
+        
+        <br>
+        <div class="card border-primary mb-3">
+            <div class="card-header" style="background: #8B0000; color: white;">Resistencias</div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <form action="" method="post" novalidate>
+                            <div class="form-group">
+                                
+                                {{ render_field(form.band1) }}
+                            </div>
+                            <br>
+                            <div class="form-group">
+                                {{ render_field(form.band2) }}
+                            </div>
+                            <br>
+                            <div class="form-group">
+                                {{ render_field(form.band3) }}
+                            </div>
+                            <br>
+                            <div class="form-group">
+                                {{ render_field(form.tolerancia) }}
+                            </div>
+                            <br>
+                            <div class="text-center">
+                                <input type="submit" value="Guardar" class="btn btn-primary">
+                            </div>
+                        </form>
+                    </div>
+                    <table class="table">
+                        <thead>
+                          <tr>        
+                            <th style="background-color: {{ color_band1_band2(band1_valor) }}; color: white;">Banda 1</th>
+                            <th style="background-color: {{ color_band1_band2(band2_valor) }}; color: white;">Banda 2</th>
+                            <th style="background-color: {{ color_band3(band3_valor) }}; color: white;">Banda 3</th>
+                            <th style="background-color: {{ color_tolerancia(tolerancia_valor) }}; color: white;">Tolerancia</th>
+                            <th>Valor</th>
+                            <th>Valor mínimo</th>
+                            <th>Valor máximo</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <tr>
+                                <td class="text-center">{{ band1_valor }}</td>
+                                <td class="text-center">{{ band2_valor }}</td>
+                                <td class="text-center">{{ band3_valor }}</td>
+                                <td class="text-center">{{ tolerancia_valor }}</td>
+                                <td class="text-center">{{ valor }} Ohms {{ tolerancia_valor }} %</td>
+                                <td class="text-center">{{ valor_min}}</td>
+                                <td class="text-center">{{ valor_max }}</td>    
+                            </tr>
+                          </tr>
+                        </tbody>
+                      </table>
+                      
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

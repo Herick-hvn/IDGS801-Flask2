@@ -26,3 +26,52 @@
         </ul>
     {% endif %}
 {% endmacro %}
+
+{% macro color_band1_band2(value) %}
+  {% set colors = { 
+      '0': '#000000', 
+      '1': '#592D00', 
+      '2': '#FF0000', 
+      '3': '#FF9900', 
+      '4': '#FFFF00', 
+      '5': '#008000', 
+      '6': '#0000FF', 
+      '7': '#9900CC', 
+      '8': '#808080', 
+      '9': '#FFFFFF'
+  } %}
+  {% set digit_str = value|string %}
+  {{ colors[digit_str] }}
+{% endmacro %}
+
+{% macro color_band3(value) %}
+  {% set colors = { 
+    '1.0': '#8B4513',
+    '10.0': '#FF0000',
+    '100.0': '#FFA500',
+    '1000.0': '#FFFF00',
+    '10000.0': '#008000',
+    '100000.0': '#0000FF',
+    '1000000.0': '#EE82EE',
+    '10000000.0': '#808080',
+    '100000000.0': '#FFFFFF',
+    '0.1': '#FFD700',
+    '0.01': '#C0C0C0'
+  } %}
+  {% set digit_str = value|string %}
+  {{ colors[digit_str] }}
+{% endmacro %}
+
+{% macro color_tolerancia(value) %}
+  {% set colors = { 
+    '1.0': '#8B4513',  
+    '2.0': '#FF0000',  
+    '0.5': '#008000',  
+    '0.25': '#0000FF',  
+    '0.1': '#EE82EE',  
+    '5.0': '#FFD700',  
+    '10.0': '#C0C0C0'  
+  } %}
+  {% set digit_str = value|string %}
+  {{ colors[digit_str] }}
+{% endmacro %}

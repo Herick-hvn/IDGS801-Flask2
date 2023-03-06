@@ -44,3 +44,62 @@ class IdiomasForm(Form):
         validators.length(min=2,max=25,message='El campo no cuenta con la informacion necesaria')
     ])
     opc = SelectField('Lenguaje',choices=[('esp','Español: '),('eng','Ingles')])
+    
+class Resistencias(Form):
+    band1 = SelectField("Banda 1", [
+        validators.DataRequired(message='El campo es requerido')
+    ], choices=[
+        ('0', 'Negro'),
+        ('1', 'Marrón'),
+        ('2', 'Rojo'),
+        ('3', 'Naranja'),
+        ('4', 'Amarillo'),
+        ('5', 'Verde'),
+        ('6', 'Azul'),
+        ('7', 'Violeta'),
+        ('8', 'Gris'),
+        ('9', 'Blanco')
+    ])
+    
+    band2 = SelectField("Banda 2", [
+        validators.DataRequired(message='El campo es requerido')
+    ], choices=[
+        ('0', 'Negro'),
+        ('1', 'Marrón'),
+        ('2', 'Rojo'),
+        ('3', 'Naranja'),
+        ('4', 'Amarillo'),
+        ('5', 'Verde'),
+        ('6', 'Azul'),
+        ('7', 'Violeta'),
+        ('8', 'Gris'),
+        ('9', 'Blanco')
+    ])
+    
+    band3 = SelectField("Banda 3", [
+        validators.DataRequired(message='El campo es requerido')
+    ], choices=[
+        ('1', 'Marrón'),
+        ('10', 'Rojo'),
+        ('100', 'Naranja'),
+        ('1000', 'Amarillo'),
+        ('10000', 'Verde'),
+        ('100000', 'Azul'),
+        ('1000000', 'Violeta'),
+        ('10000000', 'Gris'),
+        ('100000000', 'Blanco'),
+        ('0.1', 'Dorado'),
+        ('0.01', 'Plateado')
+    ])
+    
+    tolerancia = SelectField("Tolerancia", [
+        validators.DataRequired(message='El campo es requerido')
+    ], choices=[
+        ('1', 'Marrón'),
+        ('2', 'Rojo'),
+        ('0.5', 'Verde'),
+        ('0.25', 'Azul'),
+        ('0.1', 'Violeta'),
+        ('5', 'Oro'),
+        ('10', 'Plateado')
+    ])
