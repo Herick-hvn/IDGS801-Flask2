@@ -4,6 +4,8 @@ from flask import request
 from flask import make_response
 from flask import flash
 from flask_wtf import CSRFProtect
+from flask import Flask, render_template, request, redirect, url_for
+
 
 import forms
 app=Flask(__name__)
@@ -65,13 +67,16 @@ def diccionario():
     return render_template('traductorh.html',form = reg_language, palabra = palabra, idioma = idioma)
 
 
-
 @app.route('/Resistencias', methods=['GET', 'POST'])
 def calcular_resistencia():
     form = forms.Resistencias(request.form)
     valor = 0
     valor_max = 0
     valor_min = 0
+    band1_valor = 0
+    band2_valor = 0
+    band3_valor = 0
+    tolerancia_valor = 0
     if request.method == 'POST' and form.validate():
         band1_valor = int(form.band1.data)
         band2_valor = int(form.band2.data)
@@ -80,7 +85,18 @@ def calcular_resistencia():
         valor = ((band1_valor * 10) + band2_valor) * band3_valor
         valor_min = valor * (1 - (tolerancia_valor / 100))
         valor_max = valor * (1 + (tolerancia_valor / 100))
-    return render_template('resistencias.html', form=form, valor=valor, valor_min=valor_min, valor_max=valor_max,band1_valor=band1_valor,band2_valor=band2_valor, band3_valor=band3_valor, tolerancia_valor=tolerancia_valor)
+        
+        # Guardar los datos en un archivo de texto
+        with open("resistencias.txt", "a") as archivo:
+            archivo.write(f"{band1_valor},{band2_valor},{band3_valor},{tolerancia_valor},{valor},{valor_min},{valor_max}\n")
+    
+    # Leer los datos del archivo de texto y mostrarlos en la tabla
+    datos = []
+    with open("resistencias.txt", "r") as archivo:
+        for linea in archivo:
+            datos.append(linea.strip().split(","))
+            
+    return render_template('resistencias.html', form=form, datos=datos)
 
 
 def add_dictionary(eng, esp):
@@ -118,6 +134,12 @@ def search_dictionary(opc, bus):
             i += 1
             
     return palabra
+
+@app.route('/limpiar', methods=['POST'])
+def limpiar():
+    with open("resistencias.txt", "w") as archivo:
+        archivo.write("")
+    return redirect(url_for('calcular_resistencia'))
 
                 
 

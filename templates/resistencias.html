@@ -36,34 +36,38 @@
                             <br>
                             <div class="text-center">
                                 <input type="submit" value="Guardar" class="btn btn-primary">
+                                <input type="submit" value="Limpiar" class="btn btn-danger" formaction="{{ url_for('limpiar') }}">
                             </div>
+                            
                         </form>
                     </div>
                     <table class="table">
                         <thead>
                           <tr>        
-                            <th style="background-color: {{ color_band1_band2(band1_valor) }}; color: white;">Banda 1</th>
-                            <th style="background-color: {{ color_band1_band2(band2_valor) }}; color: white;">Banda 2</th>
-                            <th style="background-color: {{ color_band3(band3_valor) }}; color: white;">Banda 3</th>
-                            <th style="background-color: {{ color_tolerancia(tolerancia_valor) }}; color: white;">Tolerancia</th>
+                            <th>Banda 1</th>
+                            <th>Banda 2</th>
+                            <th>Banda 3</th>
+                            <th>Tolerancia</th>
                             <th>Valor</th>
                             <th>Valor mínimo</th>
                             <th>Valor máximo</th>
+
                           </tr>
                         </thead>
                         <tbody>
-                          <tr>
+                            {% for datos_resistencia in datos %}
                             <tr>
-                                <td class="text-center">{{ band1_valor }}</td>
-                                <td class="text-center">{{ band2_valor }}</td>
-                                <td class="text-center">{{ band3_valor }}</td>
-                                <td class="text-center">{{ tolerancia_valor }}</td>
-                                <td class="text-center">{{ valor }} Ohms {{ tolerancia_valor }} %</td>
-                                <td class="text-center">{{ valor_min}}</td>
-                                <td class="text-center">{{ valor_max }}</td>    
+                              <td style="background-color: {{ color_band1_band2(datos_resistencia[0]) }}; color: white;" class="text-center">{{ datos_resistencia[0] }}</td>
+                              <td style="background-color: {{ color_band1_band2(datos_resistencia[1]) }}; color: white;" class="text-center">{{ datos_resistencia[1] }}</td>
+                              <td style="background-color: {{ color_band3(datos_resistencia[2]) }}; color: white;" class="text-center">{{ datos_resistencia[2] }}</td>
+                              <td style="background-color: {{ color_tolerancia(datos_resistencia[3]) }}; color: white;" class="text-center">{{ datos_resistencia[3] }}</td>
+                              <td class="text-center">{{ datos_resistencia[4] }} Ohms {{ datos_resistencia[3] }} %</td>
+                              <td class="text-center">{{ datos_resistencia[5] }}</td>
+                              <td class="text-center">{{ datos_resistencia[6] }}</td>
                             </tr>
-                          </tr>
-                        </tbody>
+                            {% endfor %}
+                          </tbody>
+                          
                       </table>
                       
                     
